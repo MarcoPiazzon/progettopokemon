@@ -1,0 +1,816 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Open+Sans+Condensed:300,700");
+
+    body {
+      font-family: "Open Sans", Helvetica, sans-serif;
+      text-align: center;
+      background-image: url("images/background_battle.gif");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      z-index: 0;
+    }
+    /*img logo*/
+    #logo {
+      max-height: 150px;
+      width: 20%;
+      display: inline-block;
+    }
+
+
+    #left-turn{
+     float: left;
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      color: white;
+      font-weight: bold;
+      background-color: rgb(58, 93, 178);
+      border: 10px solid rgb(58, 93, 178);
+      border-radius: 7px;
+    }
+
+    #right-turn{
+     float: right;
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      color: white;
+      font-weight: bold;
+      background-color: rgb(214, 23, 23);
+      border: 10px solid rgb(214, 23, 23);
+      border-radius: 7px;
+    }
+
+    /* caselle di testo */
+
+    #form1{
+    float: left;
+    border:6px solid rgb(58, 93, 178);
+    border-radius: 7px;
+    margin-top: 20px;
+    }
+    #form2{
+    float: right;
+    border: 6px solid rgb(214, 23, 23);
+    border-radius: 7px;
+    margin-top: 20px;
+    }
+
+    /* bottoni  */
+    /* mic */
+     #startleft{
+      float: left;
+      background-image: url("images/microphone-icone.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 18px;
+      border:0.16em solid rgba(255,255,255,0);
+      border-radius: 2em;
+      padding: 12px;
+      text-align: center;
+      margin-left: 10px;
+      margin-top: 20px;
+      transition: all 0.2s;
+    }
+    #startleft:hover{
+      border-color: rgba(255,255,255,1);
+      }
+      @media all and (max-width:30em){
+       #starleft{
+      margin:0.2em auto;
+      }
+     }
+    #startright{
+      float: right;
+      background-image: url("images/microphone-icone.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 18px;
+      border:0.16em solid rgba(255,255,255,0);
+      border-radius: 2em;
+      padding: 12px;
+      text-align: center;
+      margin-right: 10px;
+      margin-top: 20px;
+      transition: all 0.2s;
+    }
+    #startright:hover{
+      border-color: rgba(255,255,255,1);
+      }
+      @media all and (max-width:30em){
+       #startright{
+      margin:0.2em auto;
+      }
+     }
+
+     /* fine mic */
+    #summonl{
+      background-color:rgb(58, 93, 178);
+      padding:0.3em 1.2em;
+      border:0.16em solid rgba(255,255,255,0);
+      border-radius:2em;
+      box-sizing: border-box;
+      text-decoration:none;
+      font-family:"Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      font-weight: bold;
+      color:#FFFFFF;
+      text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+      text-align:center;
+      transition: all 0.2s;
+      margin-top: 20px;
+      margin-left: 7px;
+      float: left;
+      }
+      #summonl:hover{
+      border-color: rgba(255,255,255,1);
+      }
+      @media all and (max-width:30em){
+       #summonl{
+      margin:0.2em auto;
+      }
+     }
+
+     #summonr{
+      background-color:rgb(214, 23, 23);
+      padding:0.3em 1.2em;
+      border:0.16em solid rgba(255,255,255,0);
+      border-radius:2em;
+      box-sizing: border-box;
+      text-decoration:none;
+      font-family:"Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      font-weight: bold;
+      color:#FFFFFF;
+      text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35);
+      text-align:center;
+      transition: all 0.2s;
+      margin-top: 20px;
+      margin-right: 7px;
+      float: right;
+      }
+      #summonr:hover{
+      border-color: rgba(255,255,255,1);
+      }
+      @media all and (max-width:30em){
+       #summonr{
+      margin:0.2em auto;
+      }
+     }
+
+     /* fine bottoni */
+
+     #mega-evo-left{
+       background-image: url("images/Megaevo.png");
+       background-position: center;
+       background-repeat: no-repeat;
+       background-size: cover;
+       border-radius: 2em;
+       padding: 12px;
+       margin: 3px;
+       margin-top: 5px;
+     }
+     #mega-evo-right{
+      background-image: url("images/Megaevo.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 2em;
+      padding: 12px;
+      margin: 3px;
+      margin-top: 5x;
+    }
+    /* #gigamax-left{
+      background-image: url("dynamax.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 2em;
+      padding: 20px;
+      margin: 3px;
+      display: block;
+    }
+    #gigamax-right{
+      background-image: url("dynamax.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 2em;
+      padding: 20px;
+      margin: 3px;
+      display: block;
+    } */
+
+
+    #left-flip{
+      float: left;
+      background-image: url("images/flip.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 2em;
+      padding: 12px;
+    }
+
+    #right-flip{
+      float: left;
+      background-image: url("images/flip.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      border-radius: 2em;
+      padding: 12px;
+    }
+
+    #container{
+      width: 180px;
+      height: 150px;
+      margin: 0px 10px 10px 10px;    
+  }
+  
+  .moves{
+      position: relative;
+      width: 180px;
+      height: 100px;
+      overflow: auto;
+      padding: 22px;
+      box-shadow: 0px 7px 46px 0px rgba(41, 53, 108, 0.45);
+      margin-bottom: 15px;
+      border-radius: 8px;
+      -ms-overflow-style: none;
+  }
+  .moves::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .left-move{
+      width: 100%;
+      height: 20%;
+      display: block;
+      margin-bottom: 15px;
+      border-radius: 30px;
+      box-shadow: 0px 7px 16px 0px rgba(41,53,108,0.25);
+      font-family:"Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      font-weight: bold;
+      color:white;
+      background-color: #111111;
+    }
+    .left-move:hover {
+      transform: scale3d(1.2, 1.4, 1);
+      box-shadow: 0 3px 0 rgba(42, 104, 153, 0.15);
+      z-index: 100;
+      font-size: large;
+    }
+
+    .right-move{
+      width: 100%;
+      height: 20%;
+      display: block;
+      margin-bottom: 15px;
+      border-radius: 30px;
+      box-shadow: 0px 7px 16px 0px rgba(41,53,108,0.25);
+      font-family:"Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      font-weight: bold;
+      color:white;
+      background-color: #111111;
+    }
+    .right-move:hover {
+      transform: scale3d(1.2, 1.4, 1);
+      box-shadow: 0 3px 0 rgba(42, 104, 153, 0.15);
+      z-index: 100;
+      font-size: large;
+    }
+
+    .is-hidden {
+      height: 0;
+      width: 0;
+      font-size: 0;
+      padding: 0;
+      margin: 0;
+      border: none;
+      visibility: hidden;
+    }
+    
+    .filter{
+      margin: 0px 0px 10px 0px;
+      border-radius: 30px;
+      width: 100%;
+      height: 20%;
+      padding: 5px 0px 5px 5px;
+    }
+     /* speech recognition */
+    #control{
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      color: white;
+      font-weight: bold;
+    }
+    /* fin speech rcognition */
+    /* carte */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin: 0;
+      font-weight: 400;
+    }
+
+
+
+    #cards{
+      width: 100%;
+      height: 450px;
+    }
+
+    .card {
+      display: inline-block;
+      width: 250px;
+      height: 365px;
+      padding: 1em;
+      border-radius: 15px;
+      margin: 10px;
+      background: #ddd;
+      text-align: left;
+      box-shadow:2px 5px 20px -10px #111111;
+      transition: transform 1s;
+      -webkit-transform-origin: right center;
+      -webkit-transform-style: preserve-3d;
+    }
+
+    .card__caption {
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.35);
+      padding: -5px 0px 3px 5px;
+      border-radius: 13.5px;
+    }
+
+    #card__caption__back {
+      position: relative;
+      top: 15px;
+      bottom: 10px;
+      padding: 1em;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.35);
+      padding: -15px 5px 3px 5px;
+      border-radius: 13.5px;
+    }
+
+    .card > figure {
+      height: 350px;
+      margin: 0;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card-modal > figure {
+      height: 80px;
+      margin: 0;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .card #front {
+    }
+    .card #back {
+      position: relative;
+      top: -417px;
+      transform: rotateY(180deg);
+    }
+    #left__card__type.flipped {
+      transform: translateX(-100%) rotateY(-180deg);
+    }
+    #right__card__type.flipped {
+      transform: translateX(-100%) rotateY(-180deg);
+    }
+    
+
+
+    .card__type {
+      position: absolute;
+      top: 6.9em;
+      right: 0em;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+      color: #ffffff;
+      text-transform: uppercase;
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      letter-spacing: 0.1em;
+      padding: 0.25em;
+      line-height: 1;
+      border-radius: 2px;
+      background: #bbbbbb;
+      margin-top: 10px;
+    }
+
+    .card__label {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .card__image-container{
+      height: 100px;
+      background: no-repeat;
+      background: cover;
+    }
+
+   #left-imagine{
+      padding: 10px;
+      height: auto;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 0;
+    }
+    
+    #right-imagine{
+      padding: 10px;
+      height: auto;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 0;
+    }
+
+    .card__name {
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      text-align: left;
+      margin-left: 5px;
+      font-size: 1.5em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-top: 10px;
+      color: white;
+    }
+
+    .card__stats {
+      margin: 1em 0;
+      width: 100%;
+      color: white;
+    }
+
+    .card__stats th {
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      text-align: right;
+      font-weight: 300;
+    }
+
+    .card__stats th,
+    .card__stats td {
+      width: 50%;
+      padding: 0.25em 0.5em 0;
+    }
+
+    .card__abilities {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .card__ability {
+      margin-top: 1em;
+      flex: 1 0;
+      color: white;
+    }
+
+
+    .pokemons__name
+    {
+      margin: 0;
+      padding-top: 5px;
+      font-size: 11;
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      color: white;
+      font-weight: bold;
+      visibility: hidden;
+    }
+
+    
+    .pokemonsl{
+      float: left;
+      clear: right;
+      background-color:rgb(58, 93, 178);
+      height: 40px;
+      width: 50px;
+      padding: 4px;
+      border-radius: 15px;
+      margin: 20px 5px 0 0;
+      text-align: center;
+      box-shadow: 0px 5px 20px -10px #111111;
+    }
+
+    .pokemonsr{
+      float: right;
+      background-color:rgb(214, 23, 23);
+      height: 40px;
+      width: 50px;
+      padding: 4px;
+      border-radius: 15px;
+      margin: 20px 5px 0 0;
+      text-align: center;
+      box-shadow: 0px 5px 20px -10px #111111;
+    }
+
+  
+    .pokemons__image-container{
+      height: 100%;
+      width: 100%;
+      align-self: center;
+      background: no-repeat;
+      background: cover;
+    }
+    
+    #left-imagine{
+      padding: 10px;
+      height: auto;
+      max-height: 100px;
+      z-index: 0;
+    }
+    #right-imagine{
+      padding: 10px;
+      height: auto;
+      max-height: 100px;
+      z-index: 0;
+    }
+
+
+
+    /* sistemare colori tipi  */
+    .card--anonim {
+      background: linear-gradient(110deg, rgb(177, 176, 175) 0%, rgb(181, 179, 185) 100%);
+      box-shadow: 0px 5px 20px -10px rgb(193, 189, 201);
+    }
+    
+    .card--anonim .card__type {
+      background-color: rgb(206, 205, 205);
+    }
+
+
+    #left-myProgress {
+      margin-top: 10px;
+      margin-left: 5px;
+      width: 60%;
+      padding: 2px;
+      border: 2px;
+      border-radius: 0 15px 15px 0;
+      background-color: #ddd;
+    }
+
+    #right-myProgress {
+      margin-top: 10px;
+      margin-left: 5px;
+      width: 70%;
+      padding: 2px;
+      border: 2px;
+      border-radius: 0 15px 15px 0;
+      background-color: #ddd;
+    }
+    
+    #left-myBar {
+      width: 0%;
+      height: 8px;
+      border-radius: 0 15px 15px 0;
+      background-color: #4CAF50;
+    }
+
+    
+    #right-myBar {
+      width: 0%;
+      height: 8px;
+      border-radius: 0 15px 15px 0;
+      background-color: #4CAF50;
+    }
+
+    .text-hp{
+      background-color: #ddd;
+      text-align: center;
+      width: 25%;
+      font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+      font-weight: bold;
+      border-radius: 0 0 15px 0;
+      margin-left: 5px;
+    }
+
+
+.bar-background{
+  width: 100%;
+  height: 8px;
+  background: rgb(77, 68, 68);
+  border-radius: 0 15px 15px 0;
+}
+
+.text-block {
+  position: absolute;
+  color: white;
+}
+
+
+/* Modal */
+
+#modal-myBar {
+  width: 100%;
+  height: 30px;
+  background-color: #4CAF50;
+}
+
+
+#-myBar0{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+#-myBar1{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+#-myBar2{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+#-myBar3{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+#-myBar4{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+#-myBar5{
+  width: 100%;
+  height: 8px;
+  border-radius: 0 15px 15px 0;
+  background-color: #4CAF50;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+ /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%;  /* Full height */
+  margin: auto;
+  padding: 0;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  border: 1px solid black;
+  display: inline-block;
+  padding: 0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+.card-modal {
+  display: inline-block;
+  width: 150px;
+  height: 200px;
+  padding: 1em;
+  border-radius: 15px;
+  margin: 10px;
+  background: #ddd;
+  text-align: left;
+  box-shadow:2px 5px 20px -10px #111111;
+  transition: transform 1s;
+  -webkit-transform-origin: right center;
+  -webkit-transform-style: preserve-3d;
+}
+
+.card-modal h1{
+  font-size: 20px;
+}
+
+.card-modal h3{
+  font-size: 15px;
+}
+.card-modal .card__type {
+  position: absolute;
+  right: 0em;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  color: #ffffff;
+  text-transform: uppercase;
+  font-family: "Open Sans Condensed", "Open Sans", helvetica, sans-serif;
+  letter-spacing: 0.1em;
+  padding: 0.25em;
+  line-height: 1;
+  border-radius: 2px;
+  background: #bbbbbb;
+}
+
+
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* Poison Modal */
+.tool_image-container{
+  height: 100px;
+  width: 100px;
+  align-self: center;
+  background: no-repeat;
+  background: center;
+}
+
+#poison-div{
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:rgb(58, 93, 178);
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px -10px #111111;
+}
+
+/* End Poison Modal*/
+
+
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+    /* Fine Modal*/
+
+    /* Animation Pokeball */
+
+    #overlay{
+      position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+    }
+    #start{
+      position: fixed;
+  display: block;
+  height: 100px;
+  width: 100px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  margin: auto;
+  padding: 0;
+  cursor: pointer;
+    }

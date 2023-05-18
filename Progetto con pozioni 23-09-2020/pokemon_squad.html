@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<htmls lang="it" class="">
+
+  <head>
+    <title>pokemonhtml</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/x-icon"
+      href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type=""
+      href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg"
+      color="#111">
+    <link rel="canonical" href="https://codepen.io/lambdalambdalambda/pen/gObarxM?editors=0110">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="style_squad.css">
+
+    <script type="text/javascript" src="script_squad/script_squad.js"></script>
+    <script type="text/javascript" src="script/leveshtein.js"></script>
+    <script type="text/javascript" src="script/pokedex.js"></script>
+    <script type="text/javascript" src="script/squad.js"></script>
+    <script type="module" src="script_squad/backend_squad.js"></script>
+  </head>
+
+
+  <body onload="loadFirst()">
+    <div id="container">
+      <div id="logo">
+        <img id="logo" src="images/logo.png">
+      </div>
+      <div id="tables">
+
+        <div id="colums-left">
+          <div id="pokemon-left">
+            <div id="left-turn" style="visibility: hidden; color: white"> Choose your pokemons </div>
+            <table class="pokemonsl">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="card card--left" id="left1__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left3-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left1-imagine" class="card__image">
+                          </div>
+                          <h1 id="left1__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back1-left" onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+
+
+                  </td>
+
+
+                  <!-- Fine figura 1-->
+                  <td>
+                    <div class="card card--left" id="left2__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left2-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left2-imagine" class="card__image">
+                          </div>
+                          <h1 id="left2__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back2-left" onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="card card--left" id="left3__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left3-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left3-imagine" class="card__image">
+                          </div>
+                          <h1 id="left3__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back3-left" ondblclick="console.log('ciap')"
+                        onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="card card--left" id="left4__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left4-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left4-imagine" class="card__image">
+                          </div>
+                          <h1 id="left4__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back4-left" onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="card card--left" id="left5__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left5-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left5-imagine" class="card__image">
+                          </div>
+                          <h1 id="left5__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back5-left" onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="card card--left" id="left6__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="left6-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="left6-imagine" class="card__image">
+                          </div>
+                          <h1 id="left6__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back6-left" onclick="ReLoadPokemonByClick(this.id)">
+
+                      </figure>
+                    </div>
+                  </td>
+                </tr>
+
+
+            </table>
+            <!-- Formss-->
+
+            <div id="form1">
+              <div id=form-left>
+                <input id="input-pokemon-left" type="text">
+                <button id="summonl" class="left-buttons"
+                  onclick="loadPokemon(bestMatch((document.getElementById('pokemonleft').value), pokedex), 'left')">summon</button>
+                <button style="background-color: rgb(58, 93, 178);" class="left-buttons" id="startleft"></button>
+
+                <button class="left-buttons" id="left-randoms" onclick="genRandom('left')"> random </button>
+                <button class="left-buttons" id="left-confirm" onclick="startBattle('left')"> confirm </button>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+        <div id="colums-right">
+          <div id="pokemon-right">
+            <div id="right-turn" style="visibility: hidden; color: white"> Choose your pokemons </div>
+            <table class="pokemonsr">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="card card--right" id="right1__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right1-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right1-imagine" class="card__image">
+                          </div>
+                          <h1 id="right1__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back1-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="card card--right" id="right2__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right2-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right2-imagine" class="card__image">
+                          </div>
+                          <h1 id="right2__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back2-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                  </td>
+                  <td>
+                    <div class="card card--right" id="right3__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right3-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right3-imagine" class="card__image">
+                          </div>
+                          <h1 id="right3__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back3-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="card card--right" id="right4__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right4-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right4-imagine" class="card__image">
+                          </div>
+                          <h1 id="right4__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back4-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                  </td>
+                  <td>
+                    <div class="card card--right" id="right5__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right5-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right5-imagine" class="card__image">
+                          </div>
+                          <h1 id="right5__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back5-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                  </td>
+                  <td>
+                    <div class="card card--right" id="right6__card__type">
+                      <!--<div class="card__image-container">
+                        <img id="left3-imagine" class="card__image">
+                      </div>
+                      <figcaption class="card__caption">
+                        <h1 id="left3__card__name" class="card__name">???</h1>
+                      </figcaption>-->
+                      <figure id="front">
+                        <figcaption class="card__caption" id="right6-caption">
+                          <div class="card__image-container" id="provaid">
+                            <img id="right6-imagine" class="card__image">
+                          </div>
+                          <h1 id="right6__card__name" class="card__name" onclick="ReLoadPokemonByName(this.id)">???</h1>
+
+                        </figcaption>
+                      </figure>
+
+                      <figure class="back" id="back6-right" onclick="ReLoadPokemonByClick(this.id)">
+                      </figure>
+                  </td>
+                </tr>
+            </table>
+            <!-- Formss-->
+            <div id="form1">
+              <div id="form-left">
+                <input id="input-pokemon-right" type="text">
+                <button id="summonr" class="right-buttons"
+                  onclick="loadPokemon(bestMatch((document.getElementById('pokemonright').value), pokedex), 'right')">summon</button>
+                <button style="background-color: rgb(214, 23, 23);" class="right-buttons" id="startright"></button>
+                <button class="right-buttons" id="right-randoms" onclick="genRandom('right')"> random </button>
+                <button class="right-buttons" id="right-confirm" onclick="startBattle('right')"> confirm </button>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <a id="startBattle" href="pokemon_battle.html" style="visibility: hidden; color: white;">startBattle</a>
+    </div>
+  </body>
+
+  <!--Tables-->
+  </body>
+  </html>

@@ -1,0 +1,818 @@
+var baseUrlpokemons = 'https://img.pokemondb.net/sprites/sword-shield/icon/';
+var extensionpokemons = '.png';
+var baseUrl = 'https://projectpokemon.org/images/normal-sprite/';
+var extension = '.gif';
+var turn = "";
+var b;
+var m;
+var pokemonNameLeft = "";
+var pokemonNameRight = "";
+
+
+function loadFirst() {
+    loadSquadPokemon('left');
+    loadSquadPokemon('right');
+    loadPokemonAsConstructor();
+    let l = document.getElementsByClassName("left-buttons");
+    for (let i = 0; i < l.length; i++) {
+        l[i].disabled = true;
+    }
+    let r = document.getElementsByClassName("right-buttons");
+    for (let i = 0; i < r.length; i++) {
+        r[i].disabled = true;
+    }
+
+    for (let i = 1; i < 7; i++) {
+        document.getElementById('left' + i + "-imagine").setAttribute("ondragstart", "false");
+    }
+    for (let i = 1; i < 7; i++) {
+        document.getElementById('right' + i + "-imagine").setAttribute("ondragstart", "false");
+    }
+    setTurn();
+
+}//End loadFirst
+
+function loadPokemonAsConstructor(){
+    pokemonLeft = new Pokemon("","",'left',"");
+    pokemonRight = new Pokemon("","",'right',"");
+}
+
+class Pokemon {
+    constructor(name, url, target, hp) {
+        this.name = name;
+        this.url = url;
+        this.target = target;
+        this.hp = hp;
+    }
+}
+
+
+function setTurn() {
+    let bool = Math.floor(Math.random() * 2);
+    //console.log(b);
+    if (bool == 0) {
+        turn = "left";
+    } else {
+        turn = "right";
+    }
+
+    document.getElementById(turn + "-turn").style.visibility = "visible";
+    b = document.getElementsByClassName(turn + "-buttons");
+    for (let i = 0; i < b.length; i++) {
+        b[i].disabled = false;
+    }
+    
+    for (let i = 1; i < 7; i++) {
+        document.getElementById(turn + i + "-imagine").setAttribute("ondragstart", "drag (event)");
+    }
+
+}//End setTurn
+
+function changeTurn() {
+    switch (turn) {
+        case "left":
+            b = document.getElementsByClassName(turn + "-buttons");
+            for (let i = 0; i < b.length; i++) {
+                b[i].disabled = true;
+            }
+            m = document.getElementsByClassName(turn + "-move");
+            for (let i = 0; i < m.length; i++) {
+                m[i].disabled = true;
+            }
+            for (let i = 1; i < 7; i++) {
+                document.getElementById(turn + i + "-imagine").setAttribute("ondragstart", "false");
+            }
+            document.getElementById(turn + "-turn").style.visibility = "hidden";
+            turn = "right";
+            b = document.getElementsByClassName(turn + "-buttons");
+            for (let i = 0; i < b.length; i++) {
+                b[i].disabled = false;
+            }
+            m = document.getElementsByClassName(turn + "-move");
+            for (let i = 0; i < m.length; i++) {
+                m[i].disabled = false;
+            }
+            for (let i = 1; i < 7; i++) {
+                document.getElementById(turn + i + "-imagine").setAttribute("ondragstart", "drag (event)");
+            }
+            document.getElementById(turn + "-turn").style.visibility = "visible";
+            break;
+        case "right":
+            b = document.getElementsByClassName(turn + "-buttons");
+            for (let i = 0; i < b.length; i++) {
+                b[i].disabled = true;
+            }
+            m = document.getElementsByClassName(turn + "-move");
+            for (let i = 0; i < m.length; i++) {
+                m[i].disabled = true;
+            }
+            for (let i = 1; i < 7; i++) {
+                document.getElementById(turn + i + "-imagine").setAttribute("ondragstart", "false");
+            }
+            document.getElementById(turn + "-turn").style.visibility = "hidden";
+            turn = "left";
+            b = document.getElementsByClassName(turn + "-buttons");
+            for (let i = 0; i < b.length; i++) {
+                b[i].disabled = false;
+            }
+            m = document.getElementsByClassName(turn + "-move");
+            for (let i = 0; i < m.length; i++) {
+                m[i].disabled = false;
+            }
+            for (let i = 1; i < 7; i++) {
+                document.getElementById(turn + i + "-imagine").setAttribute("ondragstart", "drag (event)");
+            }
+            document.getElementById(turn + "-turn").style.visibility = "visible";
+            break;
+    }
+
+}//End changeTurn
+
+
+function loadSquadPokemon(target) {
+    for (let i = 0; i < 6; i++) {
+        let n = i + 1;
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                let jsonObject = JSON.parse(this.responseText);
+                switch (target) {
+                    case 'left':
+                        leftPokemons[i] = jsonObject;
+                        break;
+                    case 'right':
+                        rightPokemons[i] = jsonObject;
+                        break;
+                }
+                document.getElementById(target + n + "__pokemons__name").innerHTML = jsonObject.forms[0].name;
+                document.getElementById(target + n + "-imagine").src = getpngByPokemonName(jsonObject.forms[0].name);
+            }
+
+        };
+        switch (target) {
+            case 'left':
+                xhr.open("GET", `https://pokeapi.co/api/v2/pokemon/${leftSquad[i].name}/`, true);
+                break;
+            case 'right':
+                xhr.open("GET", `https://pokeapi.co/api/v2/pokemon/${rightSquad[i].name}/`, true);
+                break;
+        }
+        xhr.send();
+    }
+
+}//End loadSquadPokemon
+
+
+function loadPokemon(pokemonName, target) {
+    leftattacks = [];
+    rightattacks = [];
+    var jsonObject = {};
+    switch (target) {
+        case 'left':
+            for (let i = 0; i < leftPokemons.length; i++) {
+                if (pokemonName == leftPokemons[i].forms[0].name) {
+                    pokemonLeft.name = pokemonName;
+                    jsonObject = leftPokemons[i];
+                    leftpokemon = jsonObject;
+                    let name =  (jsonObject.forms[0].name);
+    document.getElementById(target + "-pokemon-hp").innerHTML = jsonObject.stats[5].base_stat;
+    pokemonLeft.hp = jsonObject.stats[5].base_stat;
+    console.log("hp left: "+pokemonLeft.hp);
+    document.getElementById(target + "-pokemon-attack").innerHTML = jsonObject.stats[4].base_stat;
+    document.getElementById(target + "-pokemon-defense").innerHTML = jsonObject.stats[3].base_stat;
+    document.getElementById(target + "-pokemon-special-attack").innerHTML = jsonObject.stats[2].base_stat;
+    document.getElementById(target + "-pokemon-special-defense").innerHTML = jsonObject.stats[1].base_stat;
+    document.getElementById(target + "-pokemon-speed").innerHTML = jsonObject.stats[0].base_stat;
+    document.getElementById(target + "__card__name").innerHTML = name.replace(name.charAt(0), name.charAt(0).toUpperCase());
+    document.getElementById(target + "-imagine").src = getGifByPokemonName(jsonObject.forms[0].name);
+    document.getElementById(target+"-myBar").style.width = "100%";
+
+
+    //abilità
+    if (jsonObject.abilities[1] == null) {
+        document.getElementById(target + "-pokemon-ability").innerHTML = jsonObject.abilities[0].ability.name;
+    } else {
+        document.getElementById(target + "-pokemon-ability").innerHTML = jsonObject.abilities[0].ability.name;
+        document.getElementById(target + "-ability-hidden").innerHTML = jsonObject.abilities[1].ability.name;
+    }
+    //tipo
+    if (jsonObject.types[1] == null) {
+        document.getElementById(target + "-pokemon-type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "-pokemon-type").setAttribute("second-type", "");
+        document.getElementById(target + "-pokemon-type").innerHTML = jsonObject.types[0].type.name;
+    } else {
+        document.getElementById(target + "-pokemon-type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "-pokemon-type").setAttribute("second-type", jsonObject.types[1].type.name);
+        document.getElementById(target + "-pokemon-type").innerHTML = jsonObject.types[0].type.name + "/" + jsonObject.types[1].type.name;
+    }
+
+    //sfondo
+    if (jsonObject.types[1] == null) {
+        document.getElementById(target + "__card__type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "__card__type").setAttribute("second-type", "");
+        document.getElementById(target + "__card__type").className = "card card--" + jsonObject.types[0].type.name;
+    } else {
+        document.getElementById(target + "__card__type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "__card__type").setAttribute("second-type", jsonObject.types[1].type.name);
+        document.getElementById(target + "__card__type").className = "card card--" + jsonObject.types[0].type.name + "--" + jsonObject.types[1].type.name;
+    }
+                }
+            }
+            break;
+        case 'right':
+            for (let i = 0; i < rightPokemons.length; i++) {
+                if (pokemonName == rightPokemons[i].forms[0].name) {
+                    pokemonRight.name = pokemonName;
+                    jsonObject = rightPokemons[i];
+                    rightpokemon = jsonObject;
+                    let name =  (jsonObject.forms[0].name);
+                document.getElementById(target + "-pokemon-hp").innerHTML = jsonObject.stats[5].base_stat;
+    pokemonRight.hp = jsonObject.stats[5].base_stat;
+    console.log("hp rightr: "+pokemonRight.hp);
+    document.getElementById(target + "-pokemon-attack").innerHTML = jsonObject.stats[4].base_stat;
+    document.getElementById(target + "-pokemon-defense").innerHTML = jsonObject.stats[3].base_stat;
+    document.getElementById(target + "-pokemon-special-attack").innerHTML = jsonObject.stats[2].base_stat;
+    document.getElementById(target + "-pokemon-special-defense").innerHTML = jsonObject.stats[1].base_stat;
+    document.getElementById(target + "-pokemon-speed").innerHTML = jsonObject.stats[0].base_stat;
+    document.getElementById(target + "__card__name").innerHTML = name.replace(name.charAt(0), name.charAt(0).toUpperCase());
+    document.getElementById(target + "-imagine").src = getGifByPokemonName(jsonObject.forms[0].name);
+    document.getElementById(target+"-myBar").style.width = "100%";
+
+
+    //abilità
+    if (jsonObject.abilities[1] == null) {
+        document.getElementById(target + "-pokemon-ability").innerHTML = jsonObject.abilities[0].ability.name;
+    } else {
+        document.getElementById(target + "-pokemon-ability").innerHTML = jsonObject.abilities[0].ability.name;
+        document.getElementById(target + "-ability-hidden").innerHTML = jsonObject.abilities[1].ability.name;
+    }
+    //tipo
+    if (jsonObject.types[1] == null) {
+        document.getElementById(target + "-pokemon-type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "-pokemon-type").setAttribute("second-type", "");
+        document.getElementById(target + "-pokemon-type").innerHTML = jsonObject.types[0].type.name;
+    } else {
+        document.getElementById(target + "-pokemon-type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "-pokemon-type").setAttribute("second-type", jsonObject.types[1].type.name);
+        document.getElementById(target + "-pokemon-type").innerHTML = jsonObject.types[0].type.name + "/" + jsonObject.types[1].type.name;
+    }
+
+    //sfondo
+    if (jsonObject.types[1] == null) {
+        document.getElementById(target + "__card__type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "__card__type").setAttribute("second-type", "");
+        document.getElementById(target + "__card__type").className = "card card--" + jsonObject.types[0].type.name;
+    } else {
+        document.getElementById(target + "__card__type").setAttribute("first-type", jsonObject.types[0].type.name);
+        document.getElementById(target + "__card__type").setAttribute("second-type", jsonObject.types[1].type.name);
+        document.getElementById(target + "__card__type").className = "card card--" + jsonObject.types[0].type.name + "--" + jsonObject.types[1].type.name;
+    }
+
+                }
+                
+            }
+            break;
+    }
+    
+
+
+    switch (target) {
+        case 'left':
+            for (let i = 0; i < leftmoveset.length; i++) {
+                let m = i + 1;
+                document.getElementById(target + "-move" + m).remove();
+            }
+            leftmoveset = [];
+            break;
+        case 'right':
+            for (let i = 0; i < rightmoveset.length; i++) {
+                let m = i + 1;
+                document.getElementById(target + "-move" + m).remove();
+            }
+            rightmoveset = [];
+            break;
+    }
+
+    for (let i = 0; i < jsonObject.moves.length; i++) {
+        let m = i + 1;
+        var button = document.createElement("button");
+        button.setAttribute("id", target + "-move" + m);
+        button.setAttribute("class", target + "-move");
+        button.setAttribute("color", "");
+        var node = document.createTextNode(jsonObject.moves[i].move.name);
+        button.appendChild(node);
+        button.addEventListener("click", function () {
+            loadMove(m, target, url);
+        });
+        let url = jsonObject.moves[i].move.url;
+        switch (target) {
+            case 'left':
+                leftmoveset[i] = {
+                    name: "",
+                    url: "",
+                };
+                leftmoveset[i].name = jsonObject.moves[i].move.name;
+                leftmoveset[i].url = url;
+                break;
+            case 'right':
+                rightmoveset[i] = {
+                    name: "",
+                    url: "",
+                };
+                rightmoveset[i].name = jsonObject.moves[i].move.name;
+                rightmoveset[i].url = url;
+                break;
+        }
+
+        var div = document.getElementById(target + "-moves");
+        div.appendChild(button);
+        if (!pokemonName.includes("-mega")) {
+            document.getElementById(target + "-move" + m).disabled = true;
+        }
+    }
+    setColor(target);
+    megaEvo(pokemonName, target);
+    if (!pokemonName.includes("-mega")) {
+        changeTurn();
+    }
+
+}//End loadPokemon
+
+//ProgressBar
+    
+    
+var i = 0;
+function DamageLifePokemon(target, damage) {
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById(target+"-myBar");
+    console.log("elem: "+elem.style.width);
+    console.log("prova: "+ elem.style.width.replace("%", ""));
+    var width = elem.style.width.replace("%","");
+    var id = setInterval(frame, 10);
+    console.log(SetProgressBarAfterAttack(target,damage)+" prova method");
+    function frame() {
+      if (SetProgressBarAfterAttack(target,damage) <= 0 || width <= 0) {
+        clearInterval(id);
+        i = 0;
+        if(width <= 0){
+            DisableDeadPokemon(target);
+        }
+      } else {
+        console.log("attacco: "+damage);
+        width--;
+        damage--;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+}
+
+function DisableDeadPokemon(target){
+    console.log("pokemonName: "+pokemonNameRight, pokemonNameLeft);
+    console.log("target: "+target);
+    for(let i = 0; i <6; i++){
+        switch(target){
+            case 'left':
+                if(pokemonNameLeft == leftPokemons[i].forms[0].name){
+                    document.getElementById(target + (i+1) + "-imagine").draggable = false;
+                    document.getElementById("pokemonsl"+(i+1)).style.backgroundColor = "grey";
+                    SelectAnotherPokemon(target);
+                    if(CheckIfAnotherPokemonALive()){
+                       SelectAnotherPokemon(); 
+                    }else{
+                        //Winner!
+                    }
+                }
+                break;
+            case 'right':
+                console.log("okkkk")
+                if(pokemonNameRight == rightPokemons[i].forms[0].name){
+                    document.getElementById(target + (i+1) + "-imagine").draggable = false;
+                    document.querySelector('.pokemonsr').style.backgroundColor = 'grey';
+                    SelectAnotherPokemon(target);
+                }
+                break;
+
+        }
+        
+    }
+}
+
+function CheckIfAnotherPokemonALive(target){
+
+    //check if there is another live pokemon in the squad
+    for( let i = 0; i <6; i++){
+        if(document.getElementById("pokemonsl"+(i+1)).style.backgroundColor != "grey"){
+            return true;
+        }
+    }
+    return false;
+}
+function SelectAnotherPokemon(target){
+
+    //set another pokemon after the pokemon deads
+    console.log("Entro in selectantoehrpokemon");
+    out : for(let i = 0; i< 6; i++){
+        switch(target){
+            case 'left':
+                console.log("Prova bool: "+document.getElementById("pokemonsl"+(i+1)).style.backgroundColor != "grey");
+                if(document.getElementById("pokemonsl"+(i+1)).style.backgroundColor != "grey"){
+                    console.log("Por va carico: "+leftPokemons[i].forms[0].name);
+                    loadPokemon(leftPokemons[i].forms[0].name,target);
+                }
+                break out;
+            case 'right':
+                if(document.getElementById("pokemonsr"+(i+1)).style.backgroundColor != "grey"){
+                    loadPokemon(rightPokemons[i].forms[0].name,target);
+                }
+                i == 7;
+            break out;
+            }
+    }
+}
+
+function SetProgressBarAfterAttack(target, attack){
+    //set the progressbar after the opponent attack
+    switch(target){
+        case 'left':
+            console.log("progress abr: "+document.getElementById("left-myBar").style.width.replace("%",""));
+            console.log("hp: "+(pokemonLeft.hp*100));
+            let final_value = ((100*pokemonLeft.hp) / (document.getElementById("right-myBar").style.width.replace("%","")-attack));
+            console.log("valore left: "+final_value);
+            return final_value;
+        case 'right':
+            console.log("hp 2:"+pokemonRight.hp);
+            console.log("Valore right: " +((100*pokemonRight.hp) / document.getElementById("left-myBar").style.width.replace("%","")));
+            return ((100*pokemonRight.hp) / document.getElementById("left-myBar").style.width);
+    }
+   
+}
+
+function loadMove(movenumber, target, url) {
+    document.getElementById(target + "-filter").value = "";
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let jsonObject = JSON.parse(xhr.responseText);
+            switch (target) {
+                case 'left':
+                    leftmove = jsonObject;
+                    if (!leftattacks.includes(leftmove)) {
+                        leftattacks.push(leftmove);
+                    }
+                    break;
+                case 'right':
+                    rightmove = jsonObject;
+                    if (!rightattacks.includes(rightmove)) {
+                        rightattacks.push(rightmove);
+                    }
+                    break;
+
+            }//Switch
+
+            document.getElementById(target + "-move" + movenumber).setAttribute("color", jsonObject.type.name);
+            document.getElementById(target + "-move" + movenumber).setAttribute('style', 'background-color: ' + TypesColor.types[document.getElementById(target + "-move" + movenumber).getAttribute("color")].color_type);
+        }
+    };
+    xhr.open("GET", url, false);
+    xhr.send();
+    damagec(document.getElementById(target + "-move" + movenumber).innerHTML, target);
+
+}//End loadMove
+
+
+
+function getGifByPokemonName(pokemonName) {
+    var lowercasePokemonName = pokemonName.toLowerCase();
+    if (lowercasePokemonName.includes("mega-x")) {
+        lowercasePokemonName = lowercasePokemonName.replace("-x", "x");
+    }
+    if (lowercasePokemonName.includes("mega-y")) {
+        lowercasePokemonName = lowercasePokemonName.replace("-y", "y");
+    }
+    // if (lowercasePokemonName.includes("-") && !lowercasePokemonName.includes("mega")) {
+    //     lowercasePokemonName = lowercasePokemonName.replace("-", "");
+    // }
+    var pokemonUrlName = lowercasePokemonName
+        .replace(/\./g, '')
+        .replace(/'/g, '')
+        .replace(/\s/g, "-");
+    return baseUrl + pokemonUrlName + extension;
+
+}//End getGifByPokemonName
+
+function megaEvo(pokemonName, target) {
+    for (let i = 0; i < pokedex.length; i++) {
+        if (pokedex[i].name == pokemonName + "-mega" || pokedex[i].name == pokemonName + "-mega-x" || pokedex[i].name == pokemonName + "-mega-y") {
+            document.getElementById("mega-evo-" + target).style.visibility = "visible";
+            i = pokedex.length;
+        } else {
+            document.getElementById("mega-evo-" + target).style.visibility = "hidden";
+        }
+    }
+
+}//End megaEvo
+
+function evolution(pokemonName, target) {
+    let b = Math.floor(Math.random() * 100) + 1;
+    pokemonName = pokemonName + "-mega";
+    for (let i = 0; i < pokedex.length; i++) {
+        if (pokedex[i].name == pokemonName + "-x" || pokedex[i].name == pokemonName + "-y") {
+            if (b <= 50) {
+                pokemonName = pokemonName + "-x";
+                i = pokedex.length;
+            } else {
+                pokemonName = pokemonName + "-y";
+                i = pokedex.length;
+            }
+        }
+    }
+    loadMega(pokemonName, target);
+    loadPokemon(pokemonName, target);
+    // bottoni mosse
+
+}//End evolution
+
+function loadMega(pokemonName, target) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            let jsonObject = JSON.parse(this.responseText);
+            switch (target) {
+                case 'left':
+                    leftPokemons.push(jsonObject);
+                    break;
+                case 'right':
+                    rightPokemons.push(jsonObject);
+                    break;
+            }//Switch
+        };
+    }
+    xhr.open("GET", `https://pokeapi.co/api/v2/pokemon/${pokemonName}/`, false);
+    xhr.send();
+
+}//End loadMega
+
+
+function prendiPokemon(target) {
+    for (let i = 0; i < 6; i++) {
+        switch (target) {
+            case 'left':
+                leftSquad[i].name = localStorage.getItem(((target) + "-name" + (i)));
+                console.log(leftSquad[i].name);
+                break;
+            case 'right':
+                rightSquad[i].name = localStorage.getItem(((target) + "-name" + (i)));
+                console.log(rightSquad[i].name);
+                break;
+
+        }//Switch
+    }
+
+}//End prendiPokemon
+
+
+
+
+function getpngByPokemonName(pokemonName) {
+    let lowercasePokemonName = pokemonName.toLowerCase();
+    let pokemonUrlName = lowercasePokemonName
+        .replace(/\./g, '')
+        .replace(/'/g, '')
+        .replace(/\s/g, "-");
+    return baseUrlpokemons + pokemonUrlName + extensionpokemons;
+
+}//End getpngByPokemonName
+
+
+
+function setColor(target) {
+    if (!document.getElementById(target + '-pokemon-type').getAttribute('second-type') == "") {
+        document.getElementById(target + "-pokemon-type").setAttribute('style', 'background: linear-gradient(to right,' + TypesColor.types[document.getElementById(target + '-pokemon-type').getAttribute("first-type")].color_type + ',' +
+        TypesColor.types[document.getElementById(target + '-pokemon-type').getAttribute("second-type")].color_type + ');');
+    } else {//un tipo
+        document.getElementById(target + "-pokemon-type").setAttribute('style', 'background-color: ' + TypesColor.types[document.getElementById(target + '-pokemon-type').getAttribute("first-type")].color_type);
+
+    }
+
+    if (!document.getElementById(target + '__card__type').getAttribute('second-type') == "") {
+
+        document.getElementById(target + "__card__type").setAttribute('style', 'background: linear-gradient(to right,' + TypesColor.types[document.getElementById(target + '__card__type').getAttribute("first-type")].color_type + ',' +
+        TypesColor.types[document.getElementById(target + '__card__type').getAttribute("second-type")].color_type + ');');
+
+    } else {//un tipo
+        document.getElementById(target + "__card__type").setAttribute('style', 'background-color: ' + TypesColor.types[document.getElementById(target + '__card__type').getAttribute("first-type")].color_type);
+
+    }
+
+}//End setColor
+
+function allowDrop(ev) {
+    ev.preventDefault();
+
+}//End allowDrop
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    return true;
+
+}//End drag
+
+function drop(ev) {
+    console.log(ev);
+    ev.preventDefault();
+    let name = (ev.dataTransfer.getData("text").split("-")); //prende il id dell'immagine da cui ricaverà il nome del pokemon
+    let target_drop = "";
+    if (name[0].length == 6) {
+        target_drop = name[0].substring(0, 5);
+    } else {
+        target_drop = name[0].substring(0, 4);
+    }
+    //Da sistemare il target...... Adesso fa un po cacare
+    if ((document.getElementById(name[0] + "__pokemons__name").innerText != "")) {
+        loadPokemon((document.getElementById(name[0] + "__pokemons__name").innerText), target_drop);
+        switch(target_drop){
+            case 'left':
+                pokemonNameLeft = (document.getElementById(name[0] + "__pokemons__name").innerText);
+                break;
+            case 'right':
+                pokemonNameRight = (document.getElementById(name[0] + "__pokemons__name").innerText);
+        }
+    }
+    //console.log("Carico i lpokemon");
+
+}//End drop
+
+let leftdamage = 0;
+let rightdamage = 0;
+let ld = 0;
+let rd = 0;
+
+function damagec(move, target) {
+    console.log(move);
+    let damage = 0;
+    let level = 110;
+    let power = 0;
+    // let modifier = 0;
+    let A = 0;
+    let B = 0;
+    switch (target) {
+        case 'left':
+            power = leftmove.power;
+            if (leftmove.damage_class.name == 'physical') {
+                A = leftpokemon.stats[4].base_stat;
+                B = rightpokemon.stats[3].base_stat;
+            } else {
+                A = leftpokemon.stats[2].base_stat;
+                B = rightpokemon.stats[1].base_stat;
+            }
+            break;
+        case 'right':
+            power = rightmove.power;
+            if (rightmove.damage_class.name == 'physical') {
+                A = rightpokemon.stats[4].base_stat;
+                B = leftpokemon.stats[3].base_stat;
+            } else {
+                A = rightpokemon.stats[2].base_stat;
+                B = leftpokemon.stats[1].base_stat;
+            }
+            break;
+    }
+    damage = ((level * power * A) / (250 * B)) + 2
+
+    // modifier
+    let efficency = 0;
+    var e1 = 0;
+    var e2 = 0;
+    var movetype = "";
+    let stab = 1;
+
+    var TYPES = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel"];
+
+    var TYPE_CHART = {
+        normal: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5],
+        fire: [1, 0.5, 0.5, 1, 2, 2, 1, 1, 1, 1, 1, 2, 0.5, 1, 0.5, 1, 2],
+        water: [1, 2, 0.5, 1, 0.5, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1],
+        electric: [1, 1, 2, 0.5, 0.5, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0.5, 1, 1],
+        grass: [1, 0.5, 2, 1, 0.5, 1, 1, 0.5, 2, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5],
+        ice: [1, 0.5, 0.5, 1, 2, 0.5, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 0.5],
+        fighting: [2, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 2, 0, 1, 2, 2],
+        poison: [1, 1, 1, 1, 2, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 0],
+        ground: [1, 2, 1, 2, 0.5, 1, 1, 2, 1, 0, 1, 0.5, 2, 1, 1, 1, 2],
+        flying: [1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 0.5],
+        psychic: [1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0.5, 1, 1, 1, 1, 0, 0.5],
+        bug: [1, 0.5, 1, 1, 2, 1, 0.5, 0.5, 1, 0.5, 2, 1, 1, 0.5, 1, 2, 0.5],
+        rock: [1, 2, 1, 1, 1, 2, 0.5, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 0.5],
+        ghost: [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 0.5],
+        dragon: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0.5],
+        dark: [1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 0.5],
+        steel: [1, 0.5, 0.5, 0.5, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5]
+    };
+    switch (target) {
+        case 'left':
+            movetype = leftmove.type.name;
+            if (rightpokemon.types[1] == null) {
+                for (let j = 0; j < TYPES.length; j++) {
+                    if (TYPES[j] == rightpokemon.types[0].type.name) {
+                        efficency = TYPE_CHART[movetype][j];
+                        if (TYPES[j] == TYPE_CHART[movetype]) {
+                            stab = 1.5;
+                        }
+                    }
+                }
+            } else {
+                for (let k = 0; k < TYPES.length; k++) {
+                    if (TYPES[k] == rightpokemon.types[0].type.name) {
+                        e1 = TYPE_CHART[movetype][k];
+                    }
+                    if (TYPES[k] == rightpokemon.types[1].type.name) {
+                        //console.log(k);
+                        e2 = TYPE_CHART[movetype][k];
+                    }
+                }
+
+                if (e1 >= e2) {
+                    efficency = e2;
+                } else {
+                    efficency = e1;
+                }
+
+            }
+            ld = 1;
+            break;
+        case 'right':
+            movetype = rightmove.type.name;
+            if (leftpokemon.types[1] == null) {
+                for (let j = 0; j < TYPES.length; j++) {
+                    if (TYPES[j] == leftpokemon.types[0].type.name) {
+                        efficency = TYPE_CHART[movetype][j];
+                        if (TYPES[j] == TYPE_CHART[movetype]) {
+                            stab = 1.5;
+                        }
+                    }
+                }
+            } else {
+                for (let k = 0; k < TYPES.length; k++) {
+                    if (TYPES[k] == leftpokemon.types[0].type.name) {
+                        e1 = TYPE_CHART[movetype][k];
+                    }
+                    if (TYPES[k] == leftpokemon.types[1].type.name) {
+                        //console.log(k);
+                        e2 = TYPE_CHART[movetype][k];
+                    }
+                }
+
+                if (e1 >= e2) {
+                    efficency = e2;
+                } else {
+                    efficency = e1;
+                }
+
+            }
+            rd = 1;
+            break;
+
+    }//Switch
+
+    //console.log(efficency);
+    damage = damage * efficency * stab;
+    switch (target) {
+        case 'left':
+            leftdamage = damage;
+            break;
+        case 'right':
+            rightdamage = damage;
+            break;
+
+    }
+
+    if (ld == 1 && rd == 1) {
+        if (leftpokemon.stats[0].base_stat > rightpokemon.stats[0].base_stat) {
+            console.log(leftdamage+ " leftdamage");
+            // left attacca right
+            DamageLifePokemon('right', leftdamage);
+            console.log(rightdamage+ " rightdamage");
+            //right attacca left
+            DamageLifePokemon('left',rightdamage);
+            leftdamage = 0;
+            rightdamage = 0;
+            ld = 0;
+            rd = 0;
+        } else {
+            console.log("rightdamage "+rightdamage);
+            DamageLifePokemon('left',rightdamage);
+            //right attacca left
+            console.log("leftdamage "+leftdamage);
+            // left attacca right
+            DamageLifePokemon('right', leftdamage);
+            leftdamage = 0;
+            rightdamage = 0;
+            ld = 0;
+            rd = 0;
+        }
+    }
+
+    changeTurn();
+
+}//End damagec

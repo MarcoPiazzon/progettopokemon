@@ -1,0 +1,508 @@
+﻿<!DOCTYPE html>
+<htmls lang="it" class="">
+
+  <head>
+    <title>pokemonhtml</title>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/x-icon"
+      href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type=""
+      href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg"
+      color="#111">
+    <link rel="canonical" href="https://codepen.io/lambdalambdalambda/pen/gObarxM?editors=0110">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="style_battle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script_battle/script_battle.js"></script>
+    <script type="text/javascript" src="script/pokedex.js"></script>
+    <script type="text/javascript" src="script/leveshtein.js"></script>
+    <script type="text/javascript" src="script_battle/moveset.js"></script>
+    <script type="text/javascript" src="script_battle/objects.js"></script>
+    <script type="text/javascript" src="script/squad.js"></script>
+    <script type="text/javascript" src="script_battle/colors.js"></script>
+    <script type="module" src="script_battle/backend_battle.js"></script>
+    <script>
+
+loadPokemonFromSquad('left');
+loadPokemonFromSquad('right');
+    </script>
+
+  </head>
+
+  <body onload="AnimationStartMatch()">
+    <div id="overlay" onclick="off()">
+      <img id="start" src="images/_RQ7FF0X-removebg-preview__1_-removebg-preview.png" style="mix-blend-mode: multiply;">
+    </div>
+   
+    <div>
+      <img id="logo" src="images/logo.png">
+    </div>
+
+
+    <div id="left-turn" style="visibility: hidden;"> è il tuo turno </div>
+    <div id="right-turn" style="visibility: hidden;"> è il tuo turno </div>
+
+    <div id="cards">
+      <div class="card card--anonim" id="left__card__type" first-type="" second-type="">
+        <figure id="front">
+          <figcaption class="card__caption" id="left-caption" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="card__image-container" id="damageleft">
+              <img id="left-imagine" class="card__image">
+            </div>
+            <h1 id="left__card__name" class="card__name">???</h1>
+            <div id="left-myProgress">
+              <div class="bar-background">
+              <div id="left-myBar"></div>
+              </div>
+            </div>
+            <div id="hp-leftPokemon" class="text-hp">0/0</div>
+            <h3 id="left-pokemon-type" class="card__type" first-type="" second-type="">???
+            </h3>
+            <button id="mega-evo-left" class="left-buttons" style="visibility: hidden;"
+              onclick="evolution(bestMatch((document.getElementById('left__card__name').innerHTML), leftSquad), 'left')"></button>
+            <button id="gigamax-left" class="left-buttons" style="visibility: hidden;"></button>
+            <div id="container">
+              <div id="left-moves" class="moves">
+                <input type="text" id="left-filter" class="filter" placeholder="Type to filter the moves" />
+
+              </div>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure id="back">
+          <figcaption id="card__caption__back">
+            <button id="left-flip"
+              onclick="document.querySelector('#left__card__type').classList.toggle('flipped')"></button>
+            <table class="card__stats">
+              <tbody>
+                <tr>
+                  <th>HP</th>
+                  <td id="left-pokemon-hp">???</td>
+                </tr>
+                <tr>
+                  <th>Attack</th>
+                  <td id="left-pokemon-attack">???</td>
+                </tr>
+                <tr>
+                  <th>Defense</th>
+                  <td id="left-pokemon-defense">???</td>
+                </tr>
+                <tr>
+                  <th>Special Attack</th>
+                  <td id="left-pokemon-special-attack">???</td>
+                </tr>
+                <tr>
+                  <th>Special Defense</th>
+                  <td id="left-pokemon-special-defense">???</td>
+                </tr>
+                <tr>
+                  <th>Speed</th>
+                  <td id="left-pokemon-speed">???</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card__abilities">
+              <h4 class="card__ability">
+                <span class="card__label">Ability</span>
+                <div id="left-pokemon-ability">???</div>
+              </h4>
+              <h4 class="card__ability">
+                <span class="card__label">Hidden Ability</span>
+                <div id="left-ability-hidden">???</div>
+              </h4>
+          </figcaption>
+        </figure>
+
+      </div>
+      <div class="card card--anonim" id="right__card__type" first-type="" second-type="">
+        <figure id="front">
+          <figcaption class="card__caption" id="right-caption" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="card__image-container" id="damageright">
+              <img id="right-imagine" class="card__image">
+            </div>
+            <h1 id="right__card__name" class="card__name" first-type="" second-type="">???</h1>
+            <div id="right-myProgress">
+              <div class="bar-background">
+              <div id="right-myBar"></div>
+              </div>
+            </div>
+            <div id="hp-rightPokemon" class="text-hp">0/0</div>
+            <h3 id="right-pokemon-type" class="card__type">???
+            </h3>
+            <button id="mega-evo-right" class="right-buttons" style="visibility: hidden;"
+              onclick="evolution(bestMatch((document.getElementById('right__card__name').innerHTML), rightSquad), 'right')"></button>
+            <button id="gigamax-right" class="right-buttons" style="visibility: hidden;"></button>
+            <div id="container">
+              <div id="right-moves" class="moves">
+                <input type="text" id="right-filter" class="filter" placeholder="Type to filter the moves" />
+                
+              </div>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure id="back">
+          <figcaption id="card__caption__back">
+            <button id="right-flip"
+              onclick="document.querySelector('#right__card__type').classList.toggle('flipped')"></button>
+            <table class="card__stats">
+              <tbody>
+                <tr>
+                  <th>HP</th>
+                  <td id="right-pokemon-hp">???</td>
+                </tr>
+                <tr>
+                  <th>Attack</th>
+                  <td id="right-pokemon-attack">???</td>
+                </tr>
+                <tr>
+                  <th>Defense</th>
+                  <td id="right-pokemon-defense">???</td>
+                </tr>
+                <tr>
+                  <th>Special Attack</th>
+                  <td id="right-pokemon-special-attack">???</td>
+                </tr>
+                <tr>
+                  <th>Special Defense</th>
+                  <td id="right-pokemon-special-defense">???</td>
+                </tr>
+                <tr>
+                  <th>Speed</th>
+                  <td id="right-pokemon-speed">???</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="card__abilities">
+              <h4 class="card__ability">
+                <span class="card__label">Ability</span>
+                <div id="right-pokemon-ability">???</div>
+              </h4>
+              <h4 class="card__ability">
+                <span class="card__label">Hidden Ability</span>
+                <div id="right-ability-hidden">???</div>
+              </h4>
+          </figcaption>
+        </figure>
+      </div>
+      <script>
+        let bl = document.querySelector('#left-imagine')
+        bl.addEventListener('click', function () {
+          document.querySelector('#left__card__type').classList.toggle('flipped');
+        });
+        let br = document.querySelector('#right-imagine')
+        br.addEventListener('click', function () {
+          document.querySelector('#right__card__type').classList.toggle('flipped');
+        });
+      </script>
+    </div>
+
+
+
+    <div id="form1">
+      <input id="pokemonleft" type="text">
+    </div>
+    <div id="form2">
+      <input id="pokemonright" type="text">
+    </div>
+
+    <!--bottoni-->
+
+    <div id="buttons">
+      <button style="background-color: rgb(58, 93, 178);" class="left-buttons" id="startleft"></button>
+      <button style="background-color: rgb(214, 23, 23);" class="right-buttons" id="startright"></button>
+
+      <button id="summonl" class="left-buttons"
+        onclick="loadPokemon(bestMatch((document.getElementById('pokemonleft').value), leftSquad), 'left' )">summon</button>
+      <button id="summonr" class="right-buttons"
+        onclick="loadPokemon(bestMatch((document.getElementById('pokemonright').value), rightSquad), 'right')">summon</button>
+      <!-- <button onclick="prendiPokemon()">Prova</button> -->
+    </div>
+    <div id="control"></div>
+    <a id="backtochoose"   href="pokemon_squad.html"   style="visibility: hidden; color: white;">Back to menu</a>
+
+    <figure class="pokemonsl" id="pokemonsl1">
+      <span class="pokemons__image-container">
+        <img id="left1-imagine"
+          onmouseover="document.getElementById('left1__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left1__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons_image" ondragstart="drag(event)">
+      </span>
+      <p id="left1__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+    <figure class="pokemonsl" id="pokemonsl2">
+      <span class="pokemons__image-container">
+        <img id="left2-imagine"
+          onmouseover="document.getElementById('left2__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left2__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="left2__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+    <figure class="pokemonsl" id="pokemonsl3">
+      <span class="pokemons__image-container">
+        <img id="left3-imagine"
+          onmouseover="document.getElementById('left3__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left3__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="left3__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+    <figure class="pokemonsl" id="pokemonsl4">
+      <span class="pokemons__image-container">
+        <img id="left4-imagine"
+          onmouseover="document.getElementById('left4__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left4__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="left4__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+    <figure class="pokemonsl" id="pokemonsl5">
+      <span class="pokemons__image-container">
+        <img id="left5-imagine"
+          onmouseover="document.getElementById('left5__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left5__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="left5__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsl" id="pokemonsl6">
+      <span class="pokemons__image-container">
+        <img id="left6-imagine"
+          onmouseover="document.getElementById('left6__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('left6__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="left6__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+    <figure class="pokemonsr" id="pokemonsr1">
+      <span class="pokemons__image-container">
+        <img id="right1-imagine"
+          onmouseover="document.getElementById('right1__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right1__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right1__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsr" id="pokemonsr2">
+      <span class="pokemons__image-container">
+        <img id="right2-imagine"
+          onmouseover="document.getElementById('right2__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right2__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right2__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsr" id="pokemonsr3">
+      <span class="pokemons__image-container">
+        <img id="right3-imagine"
+          onmouseover="document.getElementById('right3__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right3__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right3__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsr" id="pokemonsr4">
+      <span class="pokemons__image-container">
+        <img id="right4-imagine"
+          onmouseover="document.getElementById('right4__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right4__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right4__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsr" id="pokemonsr5">
+      <span class="pokemons__image-container">
+        <img id="right5-imagine"
+          onmouseover="document.getElementById('right5__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right5__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right5__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+
+
+    <figure class="pokemonsr" id="pokemonsr6">
+      <span class="pokemons__image-container">
+        <img id="right6-imagine"
+          onmouseover="document.getElementById('right6__pokemons__name').style.visibility = 'visible'"
+          onmouseout="document.getElementById('right6__pokemons__name').style.visibility = 'hidden'"
+          class="pokemons__image" ondragstart="drag(event)">
+      </span>
+      <p id="right6__pokemons__name" class="pokemons__name">???</p>
+    </figure>
+    <!-- <button>action</button> -->
+   
+    <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Change Your Pokemon</h2>
+    </div>
+    <div class="modal-body" id="div1">
+          <table class="pokemonlm">
+            <tbody>
+              <tr>
+                <td>
+                  <div class="card-modal card--anonim" id="0__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)" ondrop="drop(event, this)" ondragover="allowDrop(event)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="0-imaginem" class="card__image">
+                        </div>
+                        <h1 id="0__cardm__name" class="card__name">???</h1>
+                
+                        <!-- <div id="left-myProgress">
+                          <div class= "modal-myBar" id="-myBar0"></div>
+                          <p id="hp0-Pokemon">20/20</p> -->
+                          
+                          <div id="left-myProgress">
+                            <div class="bar-background">
+                            <div id="-myBar0"></div>
+                            </div>
+                          </div>
+                          <div id="hp0-Pokemon" class="text-hp">0/0</div>
+
+                          <h3 id="0-pokemon-type" class="card__type" first-type="" second-type="">???
+                        </div>
+                      </figcaption>
+                    </figure>
+            
+                  </div>
+                </td>
+                <td>
+                  <div class="card card--anonim" id="1__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="1-imaginem" class="card__image">
+                        </div>
+                        <h1 id="1__cardm__name" class="card__name">???</h1>
+                
+                        <div id="left-myProgress">
+                          <div class="bar-background">
+                          <div id="-myBar1"></div>
+                          </div>
+                        </div>
+                        <div id="hp1-Pokemon" class="text-hp">0/0</div>
+
+                        <h3 id="1-pokemon-type" class="card__type" first-type="" second-type="">???
+                      </figcaption>
+                    </figure>
+                  </div>
+                </td>
+                <td>
+                  <div class="card card--anonim" id="2__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="2-imaginem" class="card__image">
+                        </div>
+                        <h1 id="2__cardm__name" class="card__name">???</h1>
+                
+                        <div id="left-myProgress">
+                          <div class="bar-background">
+                          <div id="-myBar2"></div>
+                          </div>
+                        </div>
+                        <div id="hp2-Pokemon" class="text-hp">0/0</div>
+                        <h3 id="2-pokemon-type" class="card__type" first-type="" second-type="">???
+                      </figcaption>
+                    </figure>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="card card--anonim" id="3__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="3-imaginem" class="card__image">
+                        </div>
+                        <h1 id="3__cardm__name" class="card__name">???</h1>
+                
+                        <div id="left-myProgress">
+                          <div class="bar-background">
+                          <div id="-myBar3"></div>
+                          </div>
+                        </div>
+                        <div id="hp3-Pokemon" class="text-hp">0/0</div>
+                        <h3 id="3-pokemon-type" class="card__type" first-type="" second-type="">???
+                      </figcaption>
+                    </figure>
+                  </div>
+                </td>
+                <td>
+                  <div class="card card--anonim" id="4__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="4-imaginem" class="card__image">
+                        </div>
+                        <h1 id="4__cardm__name" class="card__name">???</h1>
+                
+                        <div id="left-myProgress">
+                          <div class="bar-background">
+                          <div id="-myBar4"></div>
+                          </div>
+                        </div>
+                        <div id="hp4-Pokemon" class="text-hp">0/0</div>
+                        <h3 id="4-pokemon-type" class="card__type" first-type="" second-type="">???
+                      </figcaption>
+                    </figure>
+                  </div>
+                </td>
+                <td>
+                  <div class="card-modal" id="5__cardm__type" first-type="" second-type="" onclick="loadPokemonByClick(this.id)">
+                    <figure id="front">
+                      <figcaption class="card__caption" id="left-caption">
+                        <div class="card__image-container">
+                          <img id="5-imaginem" class="card__image">
+                        </div>
+                        <h1 id="5__cardm__name" class="card__name">???</h1>
+                
+                        <div id="left-myProgress">
+                          <div class="bar-background">
+                          <div id="-myBar5"></div>
+                          </div>
+                        </div>
+                        <div id="hp5-Pokemon" class="text-hp">0/0</div>
+                        <h3 id="5-pokemon-type" class="card__type" first-type="" second-type="">???
+                      </figcaption>
+                    </figure>
+                  </div>
+                </td>
+              </tr>
+
+          </table>
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+</div>
+  </body>
+
+  </html>
